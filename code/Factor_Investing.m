@@ -7,8 +7,8 @@ endDate     = datenum('01-31-2023'); % This is the last month in our sample
 xData       = linspace(startDate, endDate, height(Data20F(end-1382:end,1)));
 xData       = datenum(xData);
 %%
-benchmark    = table2array(Data20F(end-1382:end,2));        % Ретерни активів для бенчмарку
-factors      = table2array(Data20F(end-1382:end,4:23));     % Ретерни факторів
+benchmark    = table2array(Data20F(end-1382:end,2));        % Benchmark returns
+factors      = table2array(Data20F(end-1382:end,4:23));     % Factor returns
 %%
 function theta = calculate_theta(benchmark, factors, M, np, gam)
 
@@ -133,6 +133,7 @@ r_benchmark = benchmark(M+1:end, :);
 SRbenchmark = (mean(r_benchmark(:,1))/std(r_benchmark(:,1))) *sqrt(252);
 fprintf('-----Sharpe ratios for benchmark-----\n')
 fprintf('Sharpe ratio = %4.3f \n', SRbenchmark)
+
 % Using only equity factors
 
 equity_factors = factors(end-1382:end, 1:7);
@@ -140,6 +141,7 @@ theta_equity = calculate_theta(benchmark, equity_factors, M, np, gam);
 rp_equity = calculate_returns(benchmark, equity_factors, theta_equity, M, np);
 print_sharpe_ratios(rp_equity);
 plot_comulative_returns(xData, r_benchmark, rp_equity, M, 'Equity');
+
 % Using only currency factors
 
 currency_factors = factors(end-1382:end, 8:14);
@@ -147,6 +149,7 @@ theta_currency = calculate_theta(benchmark, currency_factors, M, np, gam);
 rp_currency = calculate_returns(benchmark, currency_factors, theta_currency, M, np);
 print_sharpe_ratios(rp_currency);
 plot_comulative_returns(xData, r_benchmark, rp_currency, M, 'Currency');
+
 % Using only cryptocurrency factors
 
 crypto_factors = factors(end-1382:end, 15:20);
@@ -154,6 +157,7 @@ theta_crypto = calculate_theta(benchmark, crypto_factors, M, np, gam);
 rp_crypto = calculate_returns(benchmark, crypto_factors, theta_crypto, M, np);
 print_sharpe_ratios(rp_crypto);
 plot_comulative_returns(xData, r_benchmark, rp_crypto, M, 'Cryptocurrency');
+
 % Using equity and currency factors
 
 equity_currency_factors = factors(end-1382:end, 1:14);
@@ -161,6 +165,7 @@ theta_equity_currency = calculate_theta(benchmark, equity_currency_factors, M, n
 rp_equity_currency = calculate_returns(benchmark, equity_currency_factors, theta_equity_currency, M, np);
 print_sharpe_ratios(rp_equity_currency);
 plot_comulative_returns(xData, r_benchmark, rp_equity_currency, M, 'Equity and currency');
+
 % Using equity and crypto factors
 
 equity_crypto_factors = factors(end-1382:end, [1:7, 15:20]);
@@ -168,6 +173,7 @@ theta_equity_crypto = calculate_theta(benchmark, equity_crypto_factors, M, np, g
 rp_equity_crypto = calculate_returns(benchmark, equity_crypto_factors, theta_equity_crypto, M, np);
 print_sharpe_ratios(rp_equity_crypto);
 plot_comulative_returns(xData, r_benchmark, rp_equity_crypto, M, 'Equity and cryptocurrency');
+
 % Using currency and crypto factors
 
 currency_crypto_factors = factors(end-1382:end, 8:20);
@@ -180,6 +186,7 @@ cumulative_returns = exp(cumsum(log(1+rp_currency_crypto(:,1))));
 cumulative_max = cummax(cumulative_returns);
 drawdowns = (cumulative_max - cumulative_returns) ./ cumulative_max;
 ulcer_index = sqrt(mean(drawdowns .^ 2))
+
 % Combining all three asset classes
 
 theta_all_factors = calculate_theta(benchmark, factors, M, np, gam);
@@ -191,6 +198,7 @@ cumulative_returns = exp(cumsum(log(1+rp_all_factors(:,1))));
 cumulative_max = cummax(cumulative_returns);
 drawdowns = (cumulative_max - cumulative_returns) ./ cumulative_max;
 ulcer_index = sqrt(mean(drawdowns .^ 2))
+
 %%
 for p = 1:np
     
