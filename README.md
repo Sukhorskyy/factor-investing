@@ -6,3 +6,5 @@ This repository contains scripts that were used to conduct experiments within my
 * To determine which long-short portfolio optimisation strategy works best for different types of asset classes and their possible combinations.
 
 In addition to the scripts, we also provide files containing data on the returns of the constructed portfolios as well as the factor weights.
+
+Considering that GitHub does not offer a preview of .mlx files, we provide scripts in both .m and .mlx formats. However, we recommend using .mlx scripts, because they offer a better representation of comments and explanatory notes to the code.
