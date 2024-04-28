@@ -20,5 +20,5 @@ function CVaR_value = objectivefunc(returns, beta)
     sorted = sort(returns);
     n = numel(sorted);
     index = floor((1-beta) * n);
-    CVaR_value = mean(sorted(1:index));
+    CVaR_value = mean(sorted(index:end));
 end

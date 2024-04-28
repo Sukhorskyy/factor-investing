@@ -217,7 +217,6 @@ function plot_factor_thetas(xData, factor_names, port_names, np, theta, M, name)
         end
         nexttile
         area(xData(M+1:end), y', 'LineWidth', 1);
-        hold on
         datetick('x','yyyy','keeplimits')
         recessionplot
         axis([xData(M+1) xData(end) -inf inf])
